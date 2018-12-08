@@ -34,41 +34,8 @@ class Helper:
                 return True
         return False
 
-    def saveMembers(self, member_list):
-        for sm in member_list:
-            f = open("members/" + sm.discordID.id + ".pk", 'wb')
-            pk = pickle.Pickler(f, 3)
-            pk.dump(sm)
-            f.close()
-        return
-
-    def loadMembers(self):
-        member_list = []
-        for filename in glob.glob('members/*.pk'):
-            f = open(filename, 'rb')
-            pk = pickle.Unpickler(f)
-            sm = pk.load()
-            member_list.append(sm)
-            f.close()
-        return member_list
-
-    def getPlayerByDiscord(self, member: discord.Member, player_list):
-        for player in player_list:
-            if player.discordID == member:
-                return player
-        return None
-
     def getMembersInVoice(self, server, c_name="General"):
         for channel in server.channels:
             if channel.name == c_name:
                 return channel
         return None
-
-    def printPlayerRow(self, p):
-        return '{:22.22}'.format(p.info['name']) +  \
-                "  " + \
-               '{:>4.4}'.format(str(p.info['sr'])) + \
-                "  " + \
-               '{:<10.10}'.format(p.info['role']) + \
-                "  " + \
-               '{:>30.30}'.format(p.info['heroes'])
